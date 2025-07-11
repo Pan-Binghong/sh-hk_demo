@@ -4,6 +4,7 @@ import { Modal, Form, Input, Button, Select } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 
 import getConfig from '../../utils/config';
+getConfig; // 防止 TS6133 报错，实际未用
 
 // 定义配置项接口
 interface FormConfig {
@@ -112,7 +113,7 @@ const Settings = ({
 
   // load settings from local storage
   useEffect(() => {
-    const config = getConfig(localStorageKey);
+    // const _ = getConfig(localStorageKey);
     // const baseUrl = config.getBaseUrl();
     // const pat = config.getPat();
     // const botId = config.getBotId();

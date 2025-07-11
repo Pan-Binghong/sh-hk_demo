@@ -24,7 +24,7 @@ import {
   type CommonErrorEvent,
   type ConversationAudioTranscriptUpdateEvent,
 } from '@coze/api';
-import { AudioOutlined, SoundOutlined, SoundFilled } from '@ant-design/icons';
+import { AudioOutlined, SoundOutlined, SoundFilled, ExportOutlined } from '@ant-design/icons';
 
 import getConfig from '../../utils/config';
 import Settings from '../../components/settings2';
@@ -116,7 +116,8 @@ function Chat() {
       userId = 'user_' + Math.random().toString(36).slice(2, 10);
       localStorage.setItem('chat_user_id', userId);
     }
-    fetch('https://192.168.3.4:81/api/chat-log', {
+    fetch('/api/chat-log', {
+    // fetch('https://192.168.3.4:81/api/chat-log', {
     // fetch('http://localhost:81/api/chat-log', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -290,6 +291,30 @@ function Chat() {
     }
   }
 
+  // 导出聊天记录功能
+  const handleExportChat = () => {
+    // 导出为txt格式
+    const lines = sessionChatLog.map(item => {
+      const date = new Date(item.timestamp);
+      const timeStr = date.toLocaleString();
+      const roleStr = item.role === 'user' ? '用户' : 'AI';
+      return `[${timeStr}] ${roleStr}: ${item.content}`;
+    });
+    const blob = new Blob([
+      lines.join('\n')
+    ], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    // 生成日期前缀，格式2025071000（年月日小时）
+    const now = new Date();
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const datePrefix = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}${pad(now.getHours())}`;
+    a.download = `${datePrefix}_chat.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   // 处理按住说话按钮
   const handleVoiceButtonMouseDown = (
     e: React.MouseEvent | React.TouchEvent,
@@ -445,12 +470,28 @@ function Chat() {
 
   return (
     <Layout className="chat-page">
-      <Settings
-        onSettingsChange={handleSettingsChange}
-        localStorageKey={localStorageKey}
-        fields={['bot_id', 'pat']}
-        className="settings-button"
-      />
+      <div style={{ 
+        position: 'absolute', 
+        top: '16px', 
+        right: '16px', 
+        zIndex: 10,
+        display: 'flex',
+        gap: '8px'
+      }}>
+        <Settings
+          onSettingsChange={handleSettingsChange}
+          localStorageKey={localStorageKey}
+          fields={['bot_id', 'pat']}
+        />
+        <Button
+          icon={<ExportOutlined />}
+          type="default"
+          onClick={handleExportChat}
+          disabled={sessionChatLog.length === 0}
+        >
+          Export Chat
+        </Button>
+      </div>
       <Layout.Content style={{ padding: '16px', background: '#fff' }}>
         <Row justify="center">
           <Col
@@ -549,39 +590,6 @@ function Chat() {
             sendChatLogToBackend('user', text);
           }}
         />
-
-        {/* 增加“下载本次对话”按钮 */}
-        <Row justify="center" style={{ marginTop: '10px' }}>
-          <Col span={24} style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button
-              onClick={() => {
-                // 导出为txt格式
-                const lines = sessionChatLog.map(item => {
-                  const date = new Date(item.timestamp);
-                  const timeStr = date.toLocaleString();
-                  const roleStr = item.role === 'user' ? '用户' : 'AI';
-                  return `[${timeStr}] ${roleStr}: ${item.content}`;
-                });
-                const blob = new Blob([
-                  lines.join('\n')
-                ], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                // 生成日期前缀，格式2025071000（年月日小时）
-                const now = new Date();
-                const pad = (n: number) => n.toString().padStart(2, '0');
-                const datePrefix = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}${pad(now.getHours())}`;
-                a.download = `${datePrefix}_chat.txt`;
-                a.click();
-                URL.revokeObjectURL(url);
-              }}
-              disabled={sessionChatLog.length === 0}
-            >
-              下载本次对话
-            </Button>
-          </Col>
-        </Row>
 
         <Row style={{ margin: '16px 0' }}>
           <Col span={24} style={{ textAlign: 'left' }}>

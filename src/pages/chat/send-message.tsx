@@ -75,14 +75,17 @@ const SendMessage = ({
           <Button size="large" disabled={!isConnected} onClick={showModal}>
             发送文本
           </Button>
-          <Button
-            size="large"
-            disabled={!isConnected}
-            onClick={showSignalModal}
-            style={{ marginLeft: '10px' }}
-          >
-            发送事件
-          </Button>
+          {/* 隐藏发送事件按钮 */}
+          {false && (
+            <Button
+              size="large"
+              disabled={!isConnected}
+              onClick={showSignalModal}
+              style={{ marginLeft: '10px' }}
+            >
+              发送事件
+            </Button>
+          )}
         </Col>
       </Row>
       <Modal

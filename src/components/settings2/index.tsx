@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import Select, {
+import _, {
   type DefaultOptionType,
   type OptionProps,
 } from 'antd/es/select';
@@ -38,7 +38,7 @@ const Settings2 = ({
   const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>(
     [],
   );
-  const [voiceData, setVoiceData] = useState<OptionProps[]>([]);
+  const [_, setVoiceData] = useState<OptionProps[]>([]);
   const [pat, setPat] = useState(config.getPat());
   const [showSelect, setShowSelect] = useState(
     () => !config.getPat().startsWith('pat_'),

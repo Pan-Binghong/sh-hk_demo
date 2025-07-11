@@ -34,7 +34,7 @@ const menuItems = [
     key: '/',
     icon: <MessageOutlined />,
     label: '实时语音对话',
-    title: '12356心理咨询 (Chat) 演示',
+    title: '自在社心理咨询 (Chat) 演示',
   },
   // {
   //   key: '/transcription',

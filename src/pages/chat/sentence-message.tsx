@@ -22,7 +22,7 @@ import {
 
 // 实时语音回复消息列表（音字同步模式）
 interface ChatMessage {
-  type: 'user' | 'ai';
+  role: 'user' | 'ai';
   timestamp: number;
   // 当前激活的句子索引
   activeSentenceIndex: number;
@@ -54,7 +54,7 @@ const SentenceMessage = forwardRef(
         const lastMessage = prev[prev.length - 1];
         if (
           lastMessage &&
-          lastMessage.type === 'ai' &&
+          lastMessage.role === 'ai' &&
           lastMessage.sentences &&
           lastMessage.sentences.length > 0
         ) {
@@ -79,7 +79,7 @@ const SentenceMessage = forwardRef(
           setMessageList(prev => [
             ...prev,
             {
-              type: 'user',
+              role: 'user',
               timestamp: Date.now(),
               activeSentenceIndex: -1,
               sentences: [text],
@@ -116,7 +116,7 @@ const SentenceMessage = forwardRef(
               ...prev,
               {
                 sentences: [content],
-                type: 'user',
+                role: 'user',
                 activeSentenceIndex: -1,
                 timestamp: Date.now(),
               },
@@ -132,7 +132,7 @@ const SentenceMessage = forwardRef(
               setMessageList(prev => [
                 ...prev,
                 {
-                  type: 'ai',
+                  role: 'ai',
                   timestamp: Date.now(),
                   activeSentenceIndex: 0,
                   sentences: [content],
@@ -143,7 +143,7 @@ const SentenceMessage = forwardRef(
             } else {
               setMessageList(prev => {
                 const lastMessage = prev[prev.length - 1];
-                if (lastMessage && lastMessage.type === 'ai') {
+                if (lastMessage && lastMessage.role === 'ai') {
                   // 将新句子添加到sentences数组
                   const sentences = [...(lastMessage.sentences || []), content];
                   // 更新消息，同时将activeSentenceIndex指向最新的句子
@@ -215,13 +215,13 @@ const SentenceMessage = forwardRef(
                     padding: '8px 12px',
                     borderRadius: '8px',
                     backgroundColor:
-                      message.type === 'user' ? '#95EC69' : '#FFFFFF',
+                      message.role === 'user' ? '#95EC69' : '#FFFFFF',
                     border:
-                      message.type === 'ai' ? '1px solid #E5E5E5' : 'none',
+                      message.role === 'ai' ? '1px solid #E5E5E5' : 'none',
                     display: 'inline-block',
                   }}
                 >
-                  {message.type === 'ai' &&
+                  {message.role === 'ai' &&
                   message.sentences &&
                   message.activeSentenceIndex !== undefined &&
                   message.activeSentenceIndex >= 0 ? (

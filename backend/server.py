@@ -47,5 +47,5 @@ if __name__ == '__main__':
         host='0.0.0.0',
         port=81,
         debug=True,
-        ssl_context=('../localhost.pem', '../localhost-key.pem')
+        # ssl_context=('../localhost.pem', '../localhost-key.pem') # 生产环境需要注释, Nginx反向代理到flask的81端口
     )

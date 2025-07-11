@@ -15,7 +15,7 @@ import {
 // 实时语音回复消息列表
 interface ChatMessage {
   content: string;
-  type: 'user' | 'ai';
+  role: 'user' | 'ai';
   timestamp: number;
 }
 
@@ -79,10 +79,10 @@ const ReceiveMessage = ({
           ).data;
           setMessageList(prev => [
             ...prev,
-            { content, type: 'user', timestamp: Date.now() },
+            { content, role: 'user', timestamp: Date.now() },
           ]);
           // 用户语音转写完成，写入后端
-          if (onAIMessage) onAIMessage(content, 'user');
+          if (onAIMessage) onAIMessage(content);
           break;
         }
         case WebsocketsEventType.CONVERSATION_MESSAGE_DELTA:
@@ -94,7 +94,7 @@ const ReceiveMessage = ({
                 ...prev,
                 {
                   content: event.data.content,
-                  type: 'ai',
+                  role: 'ai',
                   timestamp: Date.now(),
                 },
               ]);
@@ -103,7 +103,7 @@ const ReceiveMessage = ({
               setMessageList(prev => {
                 // 后续增量，追加到最后一条消息
                 const lastMessage = prev[prev.length - 1];
-                if (lastMessage && lastMessage.type === 'ai') {
+                if (lastMessage && lastMessage.role === 'ai') {
                   lastMessage.content += event.data.content;
                 }
                 const newMessageList = [
@@ -171,8 +171,8 @@ const ReceiveMessage = ({
                   padding: '8px 12px',
                   borderRadius: '8px',
                   backgroundColor:
-                    message.type === 'user' ? '#95EC69' : '#FFFFFF',
-                  border: message.type === 'ai' ? '1px solid #E5E5E5' : 'none',
+                    message.role === 'user' ? '#95EC69' : '#FFFFFF',
+                  border: message.role === 'ai' ? '1px solid #E5E5E5' : 'none',
                   display: 'inline-block',
                 }}
               >
