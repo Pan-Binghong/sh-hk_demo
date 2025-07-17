@@ -665,23 +665,42 @@ function Chat() {
 
         {/* 根据回复模式选择对应的消息组件 */}
         {replyMode === 'stream' ? (
-          <ReceiveMessage clientRef={clientRef} onAIMessage={(text, role = 'ai') => {
-            const safeRole: 'user' | 'ai' = role === 'user' ? 'user' : 'ai';
-            setSessionChatLog(log => [
-              ...log,
-              { role: safeRole, content: text, timestamp: Date.now() }
-            ]);
-            sendChatLogToBackend(safeRole, text);
-          }} />
+          <ReceiveMessage 
+            clientRef={clientRef} 
+            onAIMessage={(text) => {
+              setSessionChatLog(log => [
+                ...log,
+                { role: 'ai', content: text, timestamp: Date.now() }
+              ]);
+              sendChatLogToBackend('ai', text);
+            }}
+            onUserMessage={(text) => {
+              setSessionChatLog(log => [
+                ...log,
+                { role: 'user', content: text, timestamp: Date.now() }
+              ]);
+              sendChatLogToBackend('user', text);
+            }}
+          />
         ) : (
-          <SentenceMessage ref={sentenceMessageRef} clientRef={clientRef} onAIMessage={(text, role = 'ai') => {
-            const safeRole: 'user' | 'ai' = role === 'user' ? 'user' : 'ai';
-            setSessionChatLog(log => [
-              ...log,
-              { role: safeRole, content: text, timestamp: Date.now() }
-            ]);
-            sendChatLogToBackend(safeRole, text);
-          }} />
+          <SentenceMessage 
+            ref={sentenceMessageRef} 
+            clientRef={clientRef} 
+            onAIMessage={(text) => {
+              setSessionChatLog(log => [
+                ...log,
+                { role: 'ai', content: text, timestamp: Date.now() }
+              ]);
+              sendChatLogToBackend('ai', text);
+            }}
+            onUserMessage={(text) => {
+              setSessionChatLog(log => [
+                ...log,
+                { role: 'user', content: text, timestamp: Date.now() }
+              ]);
+              sendChatLogToBackend('user', text);
+            }}
+          />
         )}
         {isMobile && <ConsoleLog />}
 

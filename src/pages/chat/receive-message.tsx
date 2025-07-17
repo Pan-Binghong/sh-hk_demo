@@ -25,9 +25,11 @@ const aiMessageBuffer = { current: '' };
 const ReceiveMessage = ({
   clientRef,
   onAIMessage,
+  onUserMessage,
 }: {
   clientRef: MutableRefObject<WsChatClient | undefined>;
   onAIMessage?: (text: string) => void;
+  onUserMessage?: (text: string) => void;
 }) => {
   const [messageList, setMessageList] = useState<ChatMessage[]>([]);
   const [audioList, setAudioList] = useState<{ label: string; url: string }[]>(
@@ -81,8 +83,8 @@ const ReceiveMessage = ({
             ...prev,
             { content, role: 'user', timestamp: Date.now() },
           ]);
-          // 用户语音转写完成，写入后端
-          if (onAIMessage) onAIMessage(content);
+          // 用户语音转写完成，记录用户消息
+          if (onUserMessage) onUserMessage(content);
           break;
         }
         case WebsocketsEventType.CONVERSATION_MESSAGE_DELTA:

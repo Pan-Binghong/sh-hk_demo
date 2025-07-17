@@ -39,9 +39,11 @@ const SentenceMessage = forwardRef(
     {
       clientRef,
       onAIMessage,
+      onUserMessage,
     }: {
       clientRef: MutableRefObject<WsChatClient | undefined>;
       onAIMessage?: (text: string) => void;
+      onUserMessage?: (text: string) => void;
     },
     ref,
   ) => {
@@ -121,6 +123,8 @@ const SentenceMessage = forwardRef(
                 timestamp: Date.now(),
               },
             ]);
+            // 用户语音转写完成，记录用户消息
+            if (onUserMessage) onUserMessage(content);
             break;
           }
           case ClientEventType.AUDIO_SENTENCE_PLAYBACK_START: {
@@ -138,6 +142,7 @@ const SentenceMessage = forwardRef(
                   sentences: [content],
                 },
               ]);
+              // 只在首个句子时记录AI消息，避免重复
               if (onAIMessage) onAIMessage(content);
               isFirstSentenceRef.current = false;
             } else {
@@ -152,7 +157,7 @@ const SentenceMessage = forwardRef(
                     sentences,
                     activeSentenceIndex: sentences.length - 1,
                   };
-                  if (onAIMessage) onAIMessage(content);
+                  // 后续句子不需要重复记录，避免重复
                   return [
                     ...prev.slice(0, -1),
                     updated,

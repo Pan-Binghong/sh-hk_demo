@@ -1,31 +1,14 @@
-{"user_id": "user_abc123", "timestamp": 1712630000, "role": "user", "content": "你好，AI！"}
-{"user_id": "user_abc123", "timestamp": 1712630005, "role": "ai", "content": "你好，有什么可以帮您？"}
-{"user_id": "user_abc123", "timestamp": 1712630010, "role": "user", "content": "请给我讲个笑话。"}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "这里是12356心理咨询热线", "timestamp": 1752115841}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "你好。", "timestamp": 1752116560}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "这里是12356心理咨询热线", "timestamp": 1752116561}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "Hello! I can hear you clearly. It seems you're full of energy. Can you tell me what's on your mind today?\n", "timestamp": 1752116571}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "不好意思。", "timestamp": 1752116584}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "可能我刚刚的表述没让你听明白。", "timestamp": 1752116585}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "可能我刚刚的表述没让你听明白。", "timestamp": 1752116585}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "我想了解你有什么烦心事或者困扰，可以和我详细说说哦。", "timestamp": 1752116588}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "你好。", "timestamp": 1752116892}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "这里是12356心理咨询热线", "timestamp": 1752116892}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "你好。", "timestamp": 1752118485}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "这里是12356心理咨询热线", "timestamp": 1752118486}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "你好。", "timestamp": 1752122420}
-{"user_id": "user_w9ruv8ux", "role": "ai", "content": "这里是12356心理咨询热线", "timestamp": 1752122420}
-{"user_id": "user_7ltsk3gr", "role": "user", "content": "你好。", "timestamp": 1752122590}
-{"user_id": "user_7ltsk3gr", "role": "ai", "content": "你好，你可以说说你的困扰。", "timestamp": 1752122591}
-{"user_id": "user_7ltsk3gr", "role": "user", "content": "你好，你可以。", "timestamp": 1752122594}
-{"user_id": "user_7ltsk3gr", "role": "ai", "content": "你好呀，有什么烦心事都能跟我讲哦。 ", "timestamp": 1752122595}
-{"user_id": "user_7ihe57nl", "role": "user", "content": "没有。", "timestamp": 1752122827}
-{"user_id": "user_7ihe57nl", "role": "ai", "content": "感觉你好像不想继续描述这件事了，可以理解，你是有什么顾虑吗？", "timestamp": 1752122828}
-{"user_id": "user_7ihe57nl", "role": "user", "content": "是不是要中断了才有？", "timestamp": 1752122832}
-{"user_id": "user_7ihe57nl", "role": "ai", "content": "你好像又回到了前面关于“log”的话题，不过我还是不太懂你的意思。你可以把整个事情的来龙去脉说得更详细些，比如在什么场景下看“log”，“中断”又指的是什么情况。 ", "timestamp": 1752122834}
-{"user_id": "user_7ihe57nl", "role": "user", "content": "你好。", "timestamp": 1752122864}
-{"user_id": "user_7ihe57nl", "role": "ai", "content": "你好，你可以说说你的困扰。", "timestamp": 1752122866}
-{"user_id": "user_7ihe57nl", "role": "user", "content": "我要检查一下后端。", "timestamp": 1752122873}
-{"user_id": "user_7ihe57nl", "role": "ai", "content": "你好，我们热线负责心理相关问题的咨询，检查后端的问题不是我们在处理，你可以联系相关的技术人员或者对应的服务提供商。如果你在工作过程中因为后端的事情遇到什么烦心事，你可以说一说。 ", "timestamp": 1752122875}
-{"user_id": "user_7ihe57nl", "role": "user", "content": "有。", "timestamp": 1752122883}
-{"user_id": "user_7ihe57nl", "role": "ai", "content": "可以跟我具体说说遇到的烦心事是什么情况吗？", "timestamp": 1752122884}
+
+{"user_id": "user_w9ruv8ux", "role": "ai", "content": "你好呀～我係嚟自 **香港自在社** 嘅心理援助 AI，", "timestamp": 1752471187}
+{"user_id": "user_w9ruv8ux", "role": "ai", "content": "你好呀～我係嚟自 **香港自在社** 嘅心理援助 AI，", "timestamp": 1752471212}
+{"user_id": "user_w9ruv8ux", "role": "user", "content": "你好。", "timestamp": 1752471220}
+{"user_id": "user_w9ruv8ux", "role": "ai", "content": "你好呀！", "timestamp": 1752471221}
+{"user_id": "user_w9ruv8ux", "role": "ai", "content": "这里是12356心理咨询热线。", "timestamp": 1752723410}
+{"user_id": "user_w9ruv8ux", "role": "user", "content": "可以。", "timestamp": 1752723412}
+{"user_id": "user_w9ruv8ux", "role": "user", "content": "你好。你好。你好。", "timestamp": 1752723417}
+{"user_id": "user_w9ruv8ux", "role": "ai", "content": "询问你好。", "timestamp": 1752723420}
+{"user_id": "user_w9ruv8ux", "role": "user", "content": "这边是我的护栏代码，你看。", "timestamp": 1752723423}
+{"user_id": "user_w9ruv8ux", "role": "user", "content": "就我 pose 到这个地方。", "timestamp": 1752723427}
+{"user_id": "user_w9ruv8ux", "role": "user", "content": "OK。", "timestamp": 1752723428}
+{"user_id": "user_w9ruv8ux", "role": "user", "content": "然后。", "timestamp": 1752723430}
+{"user_id": "user_w9ruv8ux", "role": "ai", "content": "询问你能说得再具体些不。", "timestamp": 1752723432}
