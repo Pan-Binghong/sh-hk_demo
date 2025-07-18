@@ -1,0 +1,26 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    container_name: demo
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./dist-sh-4.0.5:/usr/share/nginx/html/demo:ro
+      - ./dist-hk-2.0:/usr/share/nginx/html/hk:ro
+      - ./nginx_conf/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - backend
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    expose:
+      - "81"
+    volumes:
+      - ./logs:/app/logs:rw  # 挂载日志目录到宿主机
+    restart: always 

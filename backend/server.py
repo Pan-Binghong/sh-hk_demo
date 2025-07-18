@@ -9,16 +9,24 @@ app = Flask(__name__)
 CORS(app)
 
 def get_log_file():
+    # 确保logs目录存在
+    logs_dir = '/app/logs'
+    os.makedirs(logs_dir, exist_ok=True)
+    
     # 根据域名区分日志文件
     host = request.host.split(':')[0]
     if 'demohk' in host:
-        return 'chat_log_hk.jsonl'
+        return os.path.join(logs_dir, 'chat_log_hk.jsonl')
     else:
-        return 'chat_log.jsonl'
+        return os.path.join(logs_dir, 'chat_log.jsonl')
 
 @app.route('/api/chat-log', methods=['POST'])
 def save_chat_log():
     data = request.json
+    # 之所以data有标红下划线，是因为request.json在某些情况下可能为None（比如请求体不是合法的JSON），
+    # 这时data就是None，不能进行下标操作。可以加个判断来避免报错：
+    if data is None:
+        return jsonify({'error': 'Invalid JSON'}), 400
     data['timestamp'] = int(time.time())
     log_file = get_log_file()
     with open(log_file, 'a', encoding='utf-8') as f:

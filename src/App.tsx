@@ -5,7 +5,7 @@ import {
   useNavigate,
   useLocation,
 } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Layout, Menu, theme, Button, Space } from 'antd';
 import {
@@ -14,6 +14,9 @@ import {
   // ExperimentOutlined, // 未使用，已注释
   MenuUnfoldOutlined,
   MenuFoldOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  ExportOutlined,
   // GithubOutlined, // 未使用，已注释
   // FileTextOutlined, // 未使用，已注释
 } from '@ant-design/icons';
@@ -23,6 +26,7 @@ import {
 // import Speech from './pages/speech'; // 未使用，已注释
 // import SimultInterpretation from './pages/simult-interpretation'; // 未使用，已注释
 import Chat from './pages/chat';
+import TextChat from './pages/text-chat';
 // import AudioTest from './pages/audio-test'; // 未使用，已注释
 import logo from './10kv.svg';
 import './App.css';
@@ -36,6 +40,12 @@ const menuItems = [
     label: '实时语音对话',
     title: '12356心理咨询 (Chat) 演示',
     // title: '自在社心理咨询 (Chat) 演示',
+  },
+  {
+    key: '/text-chat',
+    icon: <EditOutlined />,
+    label: '文字对话聊天',
+    title: '文字对话 (Text Chat) 演示',
   },
   // {
   //   key: '/transcription',
@@ -74,6 +84,7 @@ function MainLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [textChatHasMessages, setTextChatHasMessages] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -83,6 +94,18 @@ function MainLayout() {
     item => item.key === location.pathname,
   );
   const currentTitle = currentMenuItem?.title || '10K Voltes实时语音对话';
+
+  // 监听文字对话页面的消息状态变化
+  useEffect(() => {
+    const handleTextChatStateChange = (event: any) => {
+      setTextChatHasMessages(event.detail.hasMessages);
+    };
+
+    window.addEventListener('textChatStateChange', handleTextChatStateChange);
+    return () => {
+      window.removeEventListener('textChatStateChange', handleTextChatStateChange);
+    };
+  }, []);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -173,7 +196,45 @@ function MainLayout() {
             </div>
 
             <div className="header-right">
-              <Space size={2} style={{ display: 'flex' }}>
+              <Space size={8} style={{ display: 'flex' }}>
+                {/* 根据当前路由显示对应的页面按钮 */}
+                {location.pathname === '/text-chat' && (
+                  <>
+                    <Button
+                      type="primary"
+                      icon={<EditOutlined />}
+                      onClick={() => {
+                        // 调用文字对话页面的提示词管理功能
+                        window.dispatchEvent(new CustomEvent('openPromptModal'));
+                      }}
+                    >
+                      提示词
+                    </Button>
+                    <Button
+                      type="default"
+                      icon={<DeleteOutlined />}
+                      disabled={!textChatHasMessages}
+                      onClick={() => {
+                        // 调用文字对话页面的清空功能
+                        window.dispatchEvent(new CustomEvent('clearTextChat'));
+                      }}
+                    >
+                      清空
+                    </Button>
+                    <Button
+                      type="default"
+                      icon={<ExportOutlined />}
+                      disabled={!textChatHasMessages}
+                      onClick={() => {
+                        // 调用文字对话页面的导出功能
+                        window.dispatchEvent(new CustomEvent('exportTextChat'));
+                      }}
+                    >
+                      导出
+                    </Button>
+                  </>
+                )}
+                
                 {/* <Button
                   type="link"
                   icon={<FileTextOutlined />}
@@ -209,6 +270,7 @@ function MainLayout() {
           >
             <Routes>
               <Route path="/" element={<Chat />} />
+              <Route path="/text-chat" element={<TextChat />} />
             </Routes>
           </div>
         </Content>

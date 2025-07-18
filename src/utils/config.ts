@@ -24,4 +24,19 @@ const getConfig = (prefix: string) => {
   return config;
 };
 
+// 添加API配置
+export const getApiConfig = () => {
+  // 生产环境使用代理，开发环境直接访问
+  const isDevelopment = import.meta.env.DEV;
+  
+  return {
+    baseURL: isDevelopment 
+      ? 'http://221.181.122.58:23006/v1/chat'
+      : '/api/ai',  // 通过Nginx代理
+    model: '10kv-v1-14b',
+    systemPrompt: '你是一个心理咨询专家.',
+    temperature: 0.7,
+  };
+};
+
 export default getConfig;

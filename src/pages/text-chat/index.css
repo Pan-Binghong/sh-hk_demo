@@ -1,0 +1,414 @@
+/* 文字对话页面容器样式 - 固定页面大小，禁止整页滚动 */
+.text-chat-container {
+  height: 100%;  /* 使用100%高度，适配父容器 */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  /* 增加渐变背景 */
+  overflow: hidden !important;  /* 防止滚动条 */
+  position: relative;
+}
+
+.text-chat-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background: transparent !important;
+  overflow: hidden !important;
+  position: relative;
+}
+
+/* 移除了头部操作栏，现在使用右上角按钮 */
+
+.text-chat-messages {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.95);  /* 半透明背景 */
+  backdrop-filter: blur(10px);  /* 毛玻璃效果 */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;  /* 添加圆角 */
+  min-height: 0;  /* 确保flex容器可以正确缩放 */
+}
+
+.text-chat-messages .ant-card-body {
+  height: 100%;
+  overflow-y: auto !important;
+  padding: 16px;
+  /* 隐藏滚动条但保持滚动功能 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE和Edge */
+  flex: 1;  /* 确保能够占据剩余空间 */
+  min-height: 0;  /* 允许flex子元素收缩 */
+}
+
+/* 隐藏webkit浏览器的滚动条 */
+.text-chat-messages .ant-card-body::-webkit-scrollbar {
+  display: none;
+}
+
+.empty-chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  opacity: 0.8;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.message-item {
+  border: none !important;
+  padding: 16px 0 !important;  /* 增加消息之间的间距 */
+}
+
+.message-item.user {
+  justify-content: flex-end;
+}
+
+.message-item.assistant {
+  justify-content: flex-start;
+}
+
+.message-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;  /* 进一步增加头像和对话框之间的间距 */
+  max-width: 70%;
+  margin: 0 12px;  /* 添加左右边距，让头像不贴边 */
+}
+
+.message-item.user .message-content {
+  flex-direction: row-reverse;
+}
+
+.message-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.message-item.user .message-text {
+  align-items: flex-end;
+}
+
+.message-bubble {
+  padding: 14px 18px;  /* 增加内边距让对话框更舒适 */
+  border-radius: 16px;  /* 增加圆角，更现代化 */
+  word-wrap: break-word;
+  position: relative;
+  line-height: 1.6;  /* 增加行高，提升可读性 */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);  /* 添加轻微阴影 */
+}
+
+.message-item.user .message-bubble {
+  background: linear-gradient(135deg, #1890ff, #40a9ff);  /* 渐变背景 */
+  color: white;
+  border-bottom-right-radius: 6px;  /* 稍微增加尾巴的圆角 */
+}
+
+.message-item.assistant .message-bubble {
+  background: #f8f9fa;  /* 更柔和的背景色 */
+  color: #333;
+  border: 1px solid #e8e8e8;
+  border-bottom-left-radius: 6px;  /* 稍微增加尾巴的圆角 */
+}
+
+/* 悬停效果 */
+.message-bubble:hover {
+  transform: translateY(-1px);  /* 轻微上移效果 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.message-time {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+.typing-indicator {
+  animation: typing 1.4s infinite;
+  margin-left: 6px;
+  color: #52c41a;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+@keyframes typing {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0.3; }
+}
+
+/* 为流式消息添加动画效果 */
+.message-bubble[data-streaming="true"] {
+  animation: messageAppear 0.3s ease-out;
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 美化输入框样式 */
+.text-chat-input {
+  flex-shrink: 0;  /* 防止输入区域被压缩 */
+  background: rgba(255, 255, 255, 0.95);  /* 半透明背景 */
+  backdrop-filter: blur(10px);  /* 毛玻璃效果 */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);  /* 上方阴影 */
+  border-radius: 12px;  /* 圆角 */
+  padding: 20px;  /* 增加内边距 */
+  position: relative;
+  overflow: hidden;
+}
+
+/* 输入框背景光晕效果 */
+.text-chat-input::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.input-container {
+  display: flex;
+  gap: 16px;  /* 增加间距 */
+  align-items: flex-end;
+  position: relative;
+}
+
+/* 美化文本输入框 */
+.input-container .ant-input {
+  flex: 1;
+  border-radius: 16px !important;  /* 更大的圆角 */
+  border: 2px solid transparent !important;
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, #667eea, #764ba2) border-box !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.3s ease !important;
+  font-size: 15px !important;
+  padding: 12px 16px !important;
+  min-height: 48px !important;
+  /* 隐藏TextArea的滚动条 */
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE和Edge */
+}
+
+/* 隐藏TextArea的webkit滚动条 */
+.input-container .ant-input::-webkit-scrollbar {
+  display: none !important;
+}
+
+.input-container .ant-input:focus {
+  border: 2px solid transparent !important;
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, #40a9ff, #1890ff) border-box !important;
+  box-shadow: 0 4px 25px rgba(24, 144, 255, 0.2), 
+              0 0 0 3px rgba(24, 144, 255, 0.1) !important;
+  transform: translateY(-1px);
+}
+
+.input-container .ant-input:hover:not(:focus) {
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-1px);
+}
+
+/* 美化发送按钮 */
+.send-button {
+  min-width: 100px !important;
+  height: 48px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  color: white !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* 按钮光晕效果 */
+.send-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.send-button:hover::before {
+  left: 100%;
+}
+
+.send-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%) !important;
+}
+
+.send-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.send-button:disabled {
+  background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* 输入提示样式美化 */
+.input-tip {
+  margin-top: 12px;
+  text-align: center;
+  padding: 8px 16px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.input-tip .ant-typography {
+  color: #667eea !important;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .text-chat-content {
+    padding: 8px;
+    gap: 8px;
+    overflow: hidden !important;
+  }
+  
+  .message-content {
+    max-width: 85%;
+    gap: 12px;  /* 减少移动端的间距 */
+  }
+  
+  .message-bubble {
+    padding: 12px 16px;  /* 保持舒适的内边距 */
+    font-size: 14px;
+    border-radius: 14px;  /* 稍微减少圆角 */
+  }
+  
+  .input-container {
+    gap: 12px;
+  }
+  
+  .send-button {
+    min-width: 80px !important;
+    height: 44px !important;
+    border-radius: 14px !important;
+    font-size: 14px !important;
+  }
+  
+  .input-container .ant-input {
+    border-radius: 14px !important;
+    min-height: 44px !important;
+    font-size: 14px !important;
+    padding: 10px 14px !important;
+  }
+  
+  /* 移动端头像稍小一些 */
+  .message-content .ant-avatar {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 16px !important;
+  }
+
+  /* 移动端按钮现在在Header中，不需要额外的样式 */
+
+  .text-chat-input {
+    padding: 16px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .input-tip {
+    margin-top: 8px;
+    padding: 6px 12px;
+  }
+
+  .input-tip .ant-typography {
+    font-size: 12px;
+  }
+}
+
+/* 彻底隐藏所有滚动条 */
+* {
+  /* 隐藏滚动条但保持滚动功能 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE和Edge */
+}
+
+/* 隐藏webkit浏览器的滚动条 */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* 特别针对Ant Design组件的滚动条隐藏 */
+.ant-list,
+.ant-list-item,
+.ant-modal-body,
+.ant-modal-content,
+.ant-card,
+.ant-card-body,
+.ant-layout,
+.ant-layout-content,
+.ant-input,
+.ant-input-affix-wrapper {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE和Edge */
+}
+
+.ant-list::-webkit-scrollbar,
+.ant-list-item::-webkit-scrollbar,
+.ant-modal-body::-webkit-scrollbar,
+.ant-modal-content::-webkit-scrollbar,
+.ant-card::-webkit-scrollbar,
+.ant-card-body::-webkit-scrollbar,
+.ant-layout::-webkit-scrollbar,
+.ant-layout-content::-webkit-scrollbar,
+.ant-input::-webkit-scrollbar,
+.ant-input-affix-wrapper::-webkit-scrollbar {
+  display: none !important;
+} 

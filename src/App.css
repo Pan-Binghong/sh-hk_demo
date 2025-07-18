@@ -1,3 +1,31 @@
+/* 全局隐藏滚动条样式 - 保留滚动条隐藏功能，确保布局正常 */
+html, body {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE和Edge */
+  margin: 0;
+  padding: 0;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none !important;
+}
+
+#root {
+  height: 100vh !important;
+  overflow: hidden;  /* 防止根容器滚动 */
+}
+
+/* 隐藏所有元素的滚动条 */
+*::-webkit-scrollbar {
+  display: none !important;
+}
+
+* {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE和Edge */
+}
+
 /* 添加到您的CSS文件中，例如 App.css 或 index.css */
 .responsive-header {
   width: 100%;
@@ -62,4 +90,8 @@
   .header-left button {
     height: 48px;
   }
+}
+
+.ant-avatar {
+  background-color: #1890ff;
 }
